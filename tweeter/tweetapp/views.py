@@ -1,6 +1,8 @@
 from django.shortcuts import  render, redirect, get_object_or_404
 from .models import Tweet
 from .forms import TweetForm
+from django.conf import settings
+
 # Create your views here.
 
 def index(request):
@@ -35,14 +37,22 @@ def tweet_edit(request, tweet_id):
         return redirect('tweet_list')
     else:
         form = TweetForm(instance=tweet)
-    return render(request,"tweet_form.html",{'form':form})
+    return render(request,"tweet_form.html", {
+        'form': form,
+        'tweet': tweet,
+        'MEDIA_URL': settings.MEDIA_URL  # Add this line if needed
+    })
 
 def tweet_delete(request,tweet_id):
     tweet = get_object_or_404(Tweet, pk = tweet_id, user = request.user)
     if request.method == 'POST':
-        tweet.delete()
-        return redirect('tweet_list')
+        if tweet.user == request.user:
+            tweet.delete()
+        return redirect('tweet_list')   
     return render(request,"tweet_confirm_delete.html",{'tweet':tweet})
+        
+         
+        
     
 
     

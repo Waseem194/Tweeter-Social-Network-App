@@ -10,4 +10,4 @@ class Tweet(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.PositiveIntegerField(default=0)
     def __str__(self):
-        return f'{self.user.username} - {self.text[:10]}'
+        return  f'Tweet by {self.user.username} at {self.created_at}'
