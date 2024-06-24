@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+Tweeter Social Network
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center  mb-10">Are you sure you want to delete the tweet ?</h1>
+<div>
+    <Container>
+      <Row>
+        <Col>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="button" class="btn btn-danger">Delete</button>
+            <a class="btn btn-success" href="{% url 'tweet_list' %}">Cancel</a>
+        </form>
+        </Col>
+      </Row>
+    </Container>
+</div>
+{% endblock %}
