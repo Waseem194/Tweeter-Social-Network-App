@@ -7,60 +7,61 @@ Tweeter Social Network
 {% block content %}
 <h1 class="text-center  mb-10">Wellcome to Tweeter</h1>
 
-{% comment %} <h2>{% if form.instance.pk %} 
-Edit Tweet 
-{% else %}
-Create a Tweet
-{% endif %} {% endcomment %}
+ <h2>{% if is_edit %} 
+     Edit Tweet 
+    {% else %}
+   Create a Tweet
+   {% endif %}
     
 <style>
-    /* custom.css */
-    .container {
-        padding-top: 2rem;
+    .form-container {
+        background-color: #f8f9fa; /* Light grey background */
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 500px;
+        margin: 0 auto;
+        color: #000000;
     }
-    .card-header {
-        background-color: #007bff;
-    }
-    
 </style>
 <!-- tweet_edit.html -->
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <h1 class="text-center">Edit Tweet</h1>
-                    <div class="col-auto p-3">
-             {% if tweet.photo %}
-            <img src="{{ tweet.photo.url }}" class="img-fluid rounded-circle" alt="{{ tweet.user.username }}" style="width: 50px; height: 50px;">
-                        {% else %}
-                            <img src="{{ MEDIA_URL }}photos.png" class="img-fluid rounded-circle" alt="{{ tweet.user.username }}" style="width: 50px; height: 50px;">
-                        {% endif %}
+ <div class="form-container">
+     <Container>
+         <Row>
+             <Col>
+                <form action="" method="post"  enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+
+                        {{ form.text.label_tag }}
+                        {{ form.text }}
                     </div>
-                    <div class="col">
-                        <div class="card-body">
-         <h5 class="card-title">{{ tweet.user.username }}</h5>
-            <form method="post">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                    <div class="d-flex justify-content-end mt-3">
-            <a href="{% url 'tweet_list' %}" class="btn btn-secondary me-2">Cancel</a>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-        </form>
-    </div>
-    </div>
+                    <div class="mb-3">
+                        {{ form.photo.label_tag }}
+                        {{ form.photo }}
+                    </div>
+                    <button type="submit" class="btn btn-success">
+                        {% if is_edit %}
+                            Save Changes
+                        {% else %}
+                            Submit
+                        {% endif %}
+                    </button>
+                   <a href="{% url 'tweet_list' %}" class="btn btn-secondary me-2">Cancel</a>
+                    {% comment %} <button type="submit" class="btn btn-primary">Save Changes</button>  {% endcomment %}
+                </form>
+            </Col>
+        </Row>
+    </Container>
 </div>
-</div>
-</div>
-</div>
-</div>
-
-{% comment %} </h2> {% endcomment %}
+</h2>
 <a href="{%url 'tweet_list'%}" class="btn btn-success">Back to tweet list</a>
+    
+       {% endblock %}
+   
+ 
 
 
-{% endblock %}
+
 
 
    

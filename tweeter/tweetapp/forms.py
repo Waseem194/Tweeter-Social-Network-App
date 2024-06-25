@@ -1,5 +1,7 @@
 from django import forms
-from .models import Tweet 
+from .models import Tweet
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm 
 
 class TweetForm(forms.ModelForm):
     
@@ -7,10 +9,16 @@ class TweetForm(forms.ModelForm):
         model = Tweet
         fields = ["text","photo"]
     text = forms.CharField(
-        max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your text'})
     )
     
     photo = forms.ImageField(
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
+
+
+class UserRegistrationForm(UserCreationForm):
+        email = forms.EmailField()
+        class Meta:
+            model = User
+            fields = ('username', 'email', 'password1', 'password2',)
